@@ -42,42 +42,42 @@ iPad,"iPad Pro 11"" (gen 1)",2018.11,12,26,Apple A12X Bionic,1328,4577,GB6
 iPad,iPad mini (gen 5),2019.3,12,26,Apple A12 Bionic,1321,2879,GB6
 iPad,iPad Air (gen 3),2019.3,12,26,Apple A12 Bionic,1326,2944,GB6
 iPod touch,iPod touch (gen 7),2019.5,12,15,Apple A10 Fusion,629,1031,GB6
-iPhone,iPhone 11 Pro / 11 Pro Max,2019.9,13,26,Apple A13 Bionic,1707,3789,GB6
-iPhone,iPhone 11,2019.9,13,26,Apple A13 Bionic,1704,3651,GB6
+iPhone,iPhone 11 Pro / 11 Pro Max,2019.9,13,27,Apple A13 Bionic,1707,3789,GB6
+iPhone,iPhone 11,2019.9,13,27,Apple A13 Bionic,1704,3651,GB6
 iPad,iPad (gen 7),2019.9,13,18,Apple A10 Fusion,859,1376,GB6
-iPad,"iPad Pro 12.9"" (gen 4)",2020.3,13,26,Apple A12Z Bionic,1339,4669,GB6
-iPad,"iPad Pro 11"" (gen 2)",2020.3,13,26,Apple A12Z Bionic,1331,4650,GB6
-iPhone,iPhone SE (gen 2),2020.4,13,26,Apple A13 Bionic,1670,3028,GB6
+iPad,"iPad Pro 12.9"" (gen 4)",2020.3,13,27,Apple A12Z Bionic,1339,4669,GB6
+iPad,"iPad Pro 11"" (gen 2)",2020.3,13,27,Apple A12Z Bionic,1331,4650,GB6
+iPhone,iPhone SE (gen 2),2020.4,13,27,Apple A13 Bionic,1670,3028,GB6
 iPad,iPad (gen 8),2020.9,14,26,Apple A12 Bionic,1304,2801,GB6
-iPhone,iPhone 12 Pro / 12 Pro Max,2020.10,14,26,Apple A14 Bionic,2082,4749,GB6
-iPhone,iPhone 12 / 12 mini,2020.10,14,26,Apple A14 Bionic,2030,4580,GB6
-iPad,iPad Air (gen 4),2020.10,14,26,Apple A14 Bionic,2086,4994,GB6
-iPad,"iPad Pro 11"" (gen 3)",2021.4,14,26,Apple M1,2314,8351,GB6
-iPad,"iPad Pro 12.9"" (gen 5)",2021.4,14,26,Apple M1,2317,8399,GB6
-iPad,iPad mini (gen 6),2021.9,15,26,Apple A15 Bionic,2128,5363,GB6
-iPhone,iPhone 13 Pro / 13 Pro Max,2021.9,15,26,Apple A15 Bionic,2348,5741,GB6
-iPhone,iPhone 13 / 13 mini,2021.9,15,26,Apple A15 Bionic,2215,5238,GB6
-iPad,iPad (gen 9),2021.9,15,26,Apple A13 Bionic,1737,3848,GB6
-iPad,iPad Air (gen 5),2022.3,15,26,Apple M1,2300,8298,GB6
-iPhone,iPhone SE (gen 3),2022.3,15,26,Apple A15 Bionic,2269,5452,GB6
-iPhone,iPhone 14 Pro / 14 Pro Max,2022.9,16,26,Apple A16 Bionic,2615,6712,GB6
-iPhone,iPhone 14 / 14 Plus,2022.9,16,26,Apple A15 Bionic,2272,5564,GB6
-iPad,iPad (gen 10),2022.10,16,26,Apple A14 Bionic,2051,4724,GB6
-iPad,"iPad Pro 12.9"" (gen 6)",2022.10,16,26,Apple M2,2606,9894,GB6
-iPad,"iPad Pro 11"" (gen 4)",2022.10,16,26,Apple M2,2583,9811,GB6
-iPhone,iPhone 15 Pro / 15 Pro Max,2023.9,17,26,Apple A17 Pro,2884,7203,GB6
-iPhone,iPhone 15 / 15 Plus,2023.9,17,26,Apple A16 Bionic,2551,6339,GB6
-iPad,"iPad Air 11"" / 13"" (M2)",2024.5,17,26,Apple M2,2598,9834,GB6
-iPad,"iPad Pro 11"" / 13"" (M4)",2024.5,17,26,Apple M4,3671,13230,GB6
-iPhone,iPhone 16 Pro / 16 Pro Max,2024.9,18,26,Apple A18 Pro,3445,8634,GB6
-iPhone,iPhone 16 / 16 Plus,2024.9,18,26,Apple A18,3319,8294,GB6
-iPad,iPad Mini (A17 Pro),2024.10,18,26,Apple A17 Pro,2909,7231,GB6
-iPhone,iPhone 16e,2025.2,18,26,Apple A18,3244,7997,GB6
-iPad,"iPad Air 11"" / 13"" (M3)",2025.3,18,26,Apple M3,3050,11698,GB6
-iPad,iPad (A16),2025.3,18,26,Apple A16,2597,6062,GB6
-iPhone,iPhone Air,2025.9,26,26,Apple A19 Pro,3677,9435,GB6
-iPhone,iPhone 17 Pro / 17 Pro Max,2025.9,26,26,Apple A19 Pro,3778,9814,GB6
-iPhone,iPhone 17,2025.9,26,26,Apple A19,3623,9258,GB6
-iPad,"iPad Pro 11"" / 13"" (M5)",2025.10,26,26,Apple M5,4137,15541,GB6
-iPhone,iPhone 17e,2026.3,26,26,Apple A19,3627,9241,GB6
-iPad,"iPad Air 11"" / 13"" (M4)",2026.3,26,26,Apple M4,3741,13106,GB6
+iPhone,iPhone 12 Pro / 12 Pro Max,2020.10,14,27,Apple A14 Bionic,2082,4749,GB6
+iPhone,iPhone 12 / 12 mini,2020.10,14,27,Apple A14 Bionic,2030,4580,GB6
+iPad,iPad Air (gen 4),2020.10,14,27,Apple A14 Bionic,2086,4994,GB6
+iPad,"iPad Pro 11"" (gen 3)",2021.5,14,27,Apple M1,2314,8351,GB6
+iPad,"iPad Pro 12.9"" (gen 5)",2021.5,14,27,Apple M1,2317,8399,GB6
+iPad,iPad mini (gen 6),2021.9,15,27,Apple A15 Bionic,2128,5363,GB6
+iPhone,iPhone 13 Pro / 13 Pro Max,2021.9,15,27,Apple A15 Bionic,2348,5741,GB6
+iPhone,iPhone 13 / 13 mini,2021.9,15,27,Apple A15 Bionic,2215,5238,GB6
+iPad,iPad (gen 9),2021.9,15,27,Apple A13 Bionic,1737,3848,GB6
+iPad,iPad Air (gen 5),2022.3,15,27,Apple M1,2300,8298,GB6
+iPhone,iPhone SE (gen 3),2022.3,15,27,Apple A15 Bionic,2269,5452,GB6
+iPhone,iPhone 14 Pro / 14 Pro Max,2022.9,16,27,Apple A16 Bionic,2615,6712,GB6
+iPhone,iPhone 14 / 14 Plus,2022.9,16,27,Apple A15 Bionic,2272,5564,GB6
+iPad,iPad (gen 10),2022.10,16,27,Apple A14 Bionic,2051,4724,GB6
+iPad,"iPad Pro 12.9"" (gen 6)",2022.10,16,27,Apple M2,2606,9894,GB6
+iPad,"iPad Pro 11"" (gen 4)",2022.10,16,27,Apple M2,2583,9811,GB6
+iPhone,iPhone 15 Pro / 15 Pro Max,2023.9,17,27,Apple A17 Pro,2884,7203,GB6
+iPhone,iPhone 15 / 15 Plus,2023.9,17,27,Apple A16 Bionic,2551,6339,GB6
+iPad,"iPad Air 11"" / 13"" (M2)",2024.5,17,27,Apple M2,2598,9834,GB6
+iPad,"iPad Pro 11"" / 13"" (M4)",2024.5,17,27,Apple M4,3671,13230,GB6
+iPhone,iPhone 16 Pro / 16 Pro Max,2024.9,18,27,Apple A18 Pro,3445,8634,GB6
+iPhone,iPhone 16 / 16 Plus,2024.9,18,27,Apple A18,3319,8294,GB6
+iPad,iPad mini (A17 Pro),2024.10,18,27,Apple A17 Pro,2909,7231,GB6
+iPhone,iPhone 16e,2025.2,18,27,Apple A18,3244,7997,GB6
+iPad,"iPad Air 11"" / 13"" (M3)",2025.3,18,27,Apple M3,3050,11698,GB6
+iPad,iPad (A16),2025.3,18,27,Apple A16,2597,6062,GB6
+iPhone,iPhone Air,2025.9,26,27,Apple A19 Pro,3677,9435,GB6
+iPhone,iPhone 17 Pro / 17 Pro Max,2025.9,26,27,Apple A19 Pro,3778,9814,GB6
+iPhone,iPhone 17,2025.9,26,27,Apple A19,3623,9258,GB6
+iPad,"iPad Pro 11"" / 13"" (M5)",2025.10,26,27,Apple M5,4137,15541,GB6
+iPhone,iPhone 17e,2026.3,26,27,Apple A19,3627,9241,GB6
+iPad,"iPad Air 11"" / 13"" (M4)",2026.3,26,27,Apple M4,3741,13106,GB6
