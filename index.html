@@ -15,28 +15,46 @@
         .btn-active { background-color: #0071e3; color: white; }
         .btn-inactive { background-color: white; color: #1d1d1f; border: 1px solid #d2d2d7; }
         .btn-inactive:hover { background-color: #f5f5f7; }
+        #lang-toggle {
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        #lang-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,113,227,0.2);
+            border-color: #0071e3;
+            color: #0071e3;
+        }
+        #lang-toggle:active { transform: translateY(0); }
     </style>
 </head>
 <body class="p-4 md:p-10">
 
+    <div class="fixed top-4 right-4 z-50">
+        <button id="lang-toggle" onclick="toggleLang()" aria-label="切换语言 / Switch language"
+            class="glass-card flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-gray-700 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+            <span id="lang-toggle-text">EN</span>
+        </button>
+    </div>
+
     <div class="max-w-7xl mx-auto">
-        <header class="mb-8 text-center">
-            <h1 class="text-4xl font-semibold text-gray-900 mb-2">‎</h1>
-            <h1 class="text-4xl font-semibold text-gray-900 mb-2">Apple 设备数据库</h1>
-            <p class="text-gray-500">GeekBench 分数与系统生命周期全览 by 梨</p>
+        <header class="mb-8 text-center pt-8 md:pt-0">
+            <h1 class="text-4xl font-semibold text-gray-900 mb-2" data-i18n="title">Apple 设备数据库</h1>
+            <p class="text-gray-500" data-i18n="subtitle">GeekBench 分数与系统生命周期全览 by 梨</p>
         </header>
 
         <!-- 操作栏 -->
         <div class="glass-card p-4 mb-6 flex flex-wrap gap-3 items-center justify-between">
             <div class="flex flex-wrap gap-2" id="filter-group">
-                <button onclick="filterData('all')" class="btn btn-active" id="btn-all">全部</button>
-                <button onclick="filterData('iPhone')" class="btn btn-inactive">iPhone</button>
-                <button onclick="filterData('iPad')" class="btn btn-inactive">iPad</button>
-                <button onclick="filterData('iPod')" class="btn btn-inactive">iPod</button>
+                <button onclick="filterData('all')" class="btn btn-active" data-filter="all" data-i18n="all">全部</button>
+                <button onclick="filterData('iPhone')" class="btn btn-inactive" data-filter="iPhone">iPhone</button>
+                <button onclick="filterData('iPad')" class="btn btn-inactive" data-filter="iPad">iPad</button>
+                <button onclick="filterData('iPod')" class="btn btn-inactive" data-filter="iPod">iPod</button>
             </div>
             <div class="flex flex-wrap gap-2">
-                <button onclick="sortData('single')" class="btn btn-inactive bg-gray-100 text-sm">按单核排序 ↓</button>
-                <button onclick="sortData('multi')" class="btn btn-inactive bg-gray-100 text-sm">按多核排序 ↓</button>
+                <button onclick="sortData('single')" class="btn btn-inactive bg-gray-100 text-sm" data-i18n="sortSingle">按单核排序 ↓</button>
+                <button onclick="sortData('multi')" class="btn btn-inactive bg-gray-100 text-sm" data-i18n="sortMulti">按多核排序 ↓</button>
             </div>
         </div>
 
@@ -46,14 +64,14 @@
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-gray-50 border-b border-gray-200">
                         <tr>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap">产品线</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap">设备型号</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap text-center">状态</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap">发布时间</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap text-center">系统版本</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600">CPU</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600">单核</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600">多核</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap" data-i18n="th_lineup">产品线</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap" data-i18n="th_model">设备型号</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap text-center" data-i18n="th_status">状态</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap" data-i18n="th_release">发布时间</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap text-center" data-i18n="th_os">系统版本</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-600" data-i18n="th_cpu">CPU</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-600" data-i18n="th_single">单核</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-600" data-i18n="th_multi">多核</th>
                         </tr>
                     </thead>
                     <tbody id="table-body" class="divide-y divide-gray-100 text-sm">
@@ -67,19 +85,79 @@
     <script>
         let rawData = [];
         let displayData = [];
+        let activeFilter = 'all';
+
+        const STRINGS = {
+            zh: {
+                title: 'Apple 设备数据库',
+                subtitle: 'GeekBench 分数与系统生命周期全览 by 梨',
+                all: '全部',
+                sortSingle: '按单核排序 ↓',
+                sortMulti: '按多核排序 ↓',
+                th_lineup: '产品线',
+                th_model: '设备型号',
+                th_status: '状态',
+                th_release: '发布时间',
+                th_os: '系统版本',
+                th_cpu: 'CPU',
+                th_single: '单核',
+                th_multi: '多核',
+                status_discontinued: '停产',
+                status_vintage: '过时',
+                status_active: '正常'
+            },
+            en: {
+                title: 'Apple Device Database',
+                subtitle: 'GeekBench Scores & OS Lifecycle Overview by lingyicute',
+                all: 'All',
+                sortSingle: 'Sort by Single-Core ↓',
+                sortMulti: 'Sort by Multi-Core ↓',
+                th_lineup: 'Lineup',
+                th_model: 'Model',
+                th_status: 'Status',
+                th_release: 'Released',
+                th_os: 'OS Version',
+                th_cpu: 'CPU',
+                th_single: 'Single',
+                th_multi: 'Multi',
+                status_discontinued: 'Discontinued',
+                status_vintage: 'Vintage',
+                status_active: 'Active'
+            }
+        };
+
+        // 默认中文；记住用户上次选择
+        let currentLang = localStorage.getItem('lang') || 'zh';
+
+        function setLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+            document.title = STRINGS[lang].title;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (STRINGS[lang][key] !== undefined) el.textContent = STRINGS[lang][key];
+            });
+            document.getElementById('lang-toggle-text').textContent = lang === 'zh' ? 'EN' : '中文';
+            renderTable(displayData);
+        }
+
+        function toggleLang() {
+            setLang(currentLang === 'zh' ? 'en' : 'zh');
+        }
 
         async function loadData() {
             try {
                 const response = await fetch('data.blob');
                 const csvText = await response.text();
-                
+
                 Papa.parse(csvText, {
                     header: true,
                     skipEmptyLines: true,
                     complete: function(results) {
                         rawData = results.data;
                         displayData = [...rawData];
-                        renderTable(displayData);
+                        setLang(currentLang);
                     }
                 });
             } catch (error) {
@@ -93,13 +171,14 @@
             const releaseDate = new Date(year, (month || 1) - 1);
             const now = new Date();
             const diffYears = (now - releaseDate) / (1000 * 60 * 60 * 24 * 365.25);
+            const t = STRINGS[currentLang];
 
             if (diffYears >= 7) {
-                return { text: '停产', class: 'bg-red-100 text-red-600 border border-red-200' };
+                return { text: t.status_discontinued, class: 'bg-red-100 text-red-600 border border-red-200' };
             } else if (diffYears >= 5) {
-                return { text: '过时', class: 'bg-yellow-100 text-yellow-600 border border-yellow-200' };
+                return { text: t.status_vintage, class: 'bg-yellow-100 text-yellow-600 border border-yellow-200' };
             } else {
-                return { text: '正常', class: 'bg-green-100 text-green-600 border border-green-200' };
+                return { text: t.status_active, class: 'bg-green-100 text-green-600 border border-green-200' };
             }
         }
 
@@ -119,8 +198,8 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-gray-500">${item["发布年月"]}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-center font-medium">
-                        <span class="text-gray-400">iOS</span> ${item["首发系统"]} 
-                        <span class="mx-1 text-gray-300">→</span> 
+                        <span class="text-gray-400">iOS</span> ${item["首发系统"]}
+                        <span class="mx-1 text-gray-300">→</span>
                         <span class="text-blue-600">${item["最高系统"]}</span>
                     </td>
                     <td class="px-6 py-4 text-gray-600">${item["CPU 型号"]}</td>
@@ -132,6 +211,7 @@
         }
 
         function filterData(type) {
+            activeFilter = type;
             updateButtonStyles(type);
             displayData = (type === 'all') ? [...rawData] : rawData.filter(item => item["产品线"].toLowerCase().includes(type.toLowerCase()));
             renderTable(displayData);
@@ -146,7 +226,7 @@
         function updateButtonStyles(activeType) {
             const buttons = document.querySelectorAll('#filter-group .btn');
             buttons.forEach(btn => {
-                const isMatch = (activeType === 'all' && btn.id === 'btn-all') || btn.innerText.includes(activeType);
+                const isMatch = btn.getAttribute('data-filter') === activeType;
                 btn.className = isMatch ? 'btn btn-active' : 'btn btn-inactive';
             });
         }
