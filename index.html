@@ -64,6 +64,14 @@
         .utility-toggle:hover { transform: translateY(-1px); border-color: var(--blue); color: var(--blue); }
         .utility-toggle:active { transform: translateY(0); }
         [data-theme="light"] #theme-sun, [data-theme="dark"] #theme-moon { display: none; }
+        /* 窄屏只显示居中的图标；宽屏才展开主题文字。语言按钮不受影响。 */
+        #theme-toggle { width: 38px; height: 38px; padding: 0; gap: 0; justify-content: center; flex-shrink: 0; }
+        #theme-toggle svg { flex-shrink: 0; }
+        #theme-toggle-text { display: none; }
+        @media (min-width: 1024px) {
+            #theme-toggle { width: auto; padding: 8px 16px; gap: 6px; }
+            #theme-toggle-text { display: inline; }
+        }
     </style>
 </head>
 <body class="px-4 pb-4 pt-10 md:px-10 md:pb-10">
