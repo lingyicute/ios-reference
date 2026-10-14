@@ -22,6 +22,9 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
         :root {
+            /* 统一缩至原来的 80%；rem 让字体、间距、图标和控件一起缩放。
+               使用百分比保留浏览器默认字号偏好，不限制用户手动缩放。 */
+            font-size: 80%;
             color-scheme: light;
             --page: #f5f5f7; --surface: rgba(255,255,255,.8); --button: #fff;
             --heading: #1d1d1f; --text: #374151; --muted: #6b7280; --faint: #737d8c;
@@ -42,7 +45,7 @@
             --green-bg: #1b3d30; --green: #88dfb1; --green-border: #32664b;
         }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--page); color: var(--text); }
-        .glass-card { background: var(--surface); backdrop-filter: blur(10px); border-radius: 12px; border: 1px solid var(--border); }
+        .glass-card { background: var(--surface); backdrop-filter: blur(10px); border-radius: .75rem; border: 1px solid var(--border); }
         .text-heading { color: var(--heading); }
         .text-muted { color: var(--muted); }
         .text-faint { color: var(--faint); }
@@ -51,25 +54,25 @@
         thead { background: var(--subtle); border-bottom: 1px solid var(--divider); }
         #table-body > tr + tr { border-top: 1px solid var(--divider); }
         #table-body > tr:hover { background: var(--hover); }
-        .status-badge { padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; min-width: 50px; text-align: center; border: 1px solid transparent; }
+        .status-badge { padding: .125rem .625rem; border-radius: 1.25rem; font-size: 0.75rem; font-weight: 600; display: inline-block; min-width: 3.125rem; text-align: center; border: 1px solid transparent; }
         .status-discontinued { background: var(--red-bg); color: var(--red); border-color: var(--red-border); }
         .status-vintage { background: var(--yellow-bg); color: var(--yellow); border-color: var(--yellow-border); }
         .status-active { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
-        .btn { transition: background-color .2s, color .2s; border-radius: 8px; padding: 8px 16px; font-weight: 500; border: 1px solid transparent; }
+        .btn { transition: background-color .2s, color .2s; border-radius: .5rem; padding: .5rem 1rem; font-weight: 500; border: 1px solid transparent; }
         .btn-active { background-color: var(--accent); color: white; }
         .btn-inactive { background-color: var(--button); color: var(--heading); border-color: var(--border); }
         .btn-inactive:hover { background-color: var(--hover); }
-        button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+        button:focus-visible { outline: .1875rem solid var(--blue); outline-offset: .1875rem; }
         .utility-toggle { color: var(--text); transition: transform .2s; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
         .utility-toggle:hover { transform: translateY(-1px); border-color: var(--blue); color: var(--blue); }
         .utility-toggle:active { transform: translateY(0); }
         [data-theme="light"] #theme-sun, [data-theme="dark"] #theme-moon { display: none; }
         /* 窄屏只显示居中的图标；宽屏才展开主题文字。语言按钮不受影响。 */
-        #theme-toggle { width: 38px; height: 38px; padding: 0; gap: 0; justify-content: center; flex-shrink: 0; }
-        #theme-toggle svg { flex-shrink: 0; }
+        #theme-toggle { width: 2.375rem; height: 2.375rem; padding: 0; gap: 0; justify-content: center; flex-shrink: 0; }
+        .utility-toggle svg { width: 1rem; height: 1rem; flex-shrink: 0; }
         #theme-toggle-text { display: none; }
         @media (min-width: 1024px) {
-            #theme-toggle { width: auto; padding: 8px 16px; gap: 6px; }
+            #theme-toggle { width: auto; padding: .5rem 1rem; gap: .375rem; }
             #theme-toggle-text { display: inline; }
         }
     </style>
