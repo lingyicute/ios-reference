@@ -4,35 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apple 设备数据库</title>
+    <script>
+        // 在页面绘制前应用主题，避免已保存的深色主题出现浅色闪烁。
+        function readPreference(key) {
+            try { return localStorage.getItem(key); } catch { return null; }
+        }
+        function savePreference(key, value) {
+            try { localStorage.setItem(key, value); } catch { /* 禁用存储时仍可正常切换 */ }
+        }
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const savedTheme = readPreference('theme');
+        let preferredTheme = ['light', 'dark'].includes(savedTheme) ? savedTheme : null;
+        document.documentElement.dataset.theme = preferredTheme || (systemTheme.matches ? 'dark' : 'light');
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f5f5f7; }
-        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); }
-        .status-badge { padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; min-width: 50px; text-align: center; }
-        .btn { transition: all 0.2s; border-radius: 8px; padding: 8px 16px; font-weight: 500; }
-        .btn-active { background-color: #0071e3; color: white; }
-        .btn-inactive { background-color: white; color: #1d1d1f; border: 1px solid #d2d2d7; }
-        .btn-inactive:hover { background-color: #f5f5f7; }
-        #lang-toggle {
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        :root {
+            color-scheme: light;
+            --page: #f5f5f7; --surface: rgba(255,255,255,.8); --button: #fff;
+            --heading: #1d1d1f; --text: #374151; --muted: #6b7280; --faint: #737d8c;
+            --border: #d2d2d7; --divider: #e5e7eb; --subtle: #f9fafb;
+            --hover: #eff6ff; --accent: #0071e3; --blue: #2563eb; --indigo: #4f46e5;
+            --red-bg: #fee2e2; --red: #dc2626; --red-border: #fecaca;
+            --yellow-bg: #fef9c3; --yellow: #854d0e; --yellow-border: #fde68a;
+            --green-bg: #dcfce7; --green: #166534; --green-border: #bbf7d0;
         }
-        #lang-toggle:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,113,227,0.2);
-            border-color: #0071e3;
-            color: #0071e3;
+        :root[data-theme="dark"] {
+            color-scheme: dark;
+            --page: #111318; --surface: rgba(29,33,41,.9); --button: #252a34;
+            --heading: #f3f4f6; --text: #d1d5db; --muted: #a1a9b7; --faint: #949eae;
+            --border: #454d5c; --divider: #343b48; --subtle: #202530;
+            --hover: #26364c; --accent: #0969cc; --blue: #78b5ff; --indigo: #b1a9ff;
+            --red-bg: #49242b; --red: #ffafb3; --red-border: #753743;
+            --yellow-bg: #443820; --yellow: #f6d778; --yellow-border: #715d30;
+            --green-bg: #1b3d30; --green: #88dfb1; --green-border: #32664b;
         }
-        #lang-toggle:active { transform: translateY(0); }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--page); color: var(--text); }
+        .glass-card { background: var(--surface); backdrop-filter: blur(10px); border-radius: 12px; border: 1px solid var(--border); }
+        .text-heading { color: var(--heading); }
+        .text-muted { color: var(--muted); }
+        .text-faint { color: var(--faint); }
+        .text-primary { color: var(--blue); }
+        .text-secondary { color: var(--indigo); }
+        thead { background: var(--subtle); border-bottom: 1px solid var(--divider); }
+        #table-body > tr + tr { border-top: 1px solid var(--divider); }
+        #table-body > tr:hover { background: var(--hover); }
+        .status-badge { padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; min-width: 50px; text-align: center; border: 1px solid transparent; }
+        .status-discontinued { background: var(--red-bg); color: var(--red); border-color: var(--red-border); }
+        .status-vintage { background: var(--yellow-bg); color: var(--yellow); border-color: var(--yellow-border); }
+        .status-active { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+        .btn { transition: background-color .2s, color .2s; border-radius: 8px; padding: 8px 16px; font-weight: 500; border: 1px solid transparent; }
+        .btn-active { background-color: var(--accent); color: white; }
+        .btn-inactive { background-color: var(--button); color: var(--heading); border-color: var(--border); }
+        .btn-inactive:hover { background-color: var(--hover); }
+        button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+        .utility-toggle { color: var(--text); transition: transform .2s; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        .utility-toggle:hover { transform: translateY(-1px); border-color: var(--blue); color: var(--blue); }
+        .utility-toggle:active { transform: translateY(0); }
+        [data-theme="light"] #theme-sun, [data-theme="dark"] #theme-moon { display: none; }
     </style>
 </head>
 <body class="p-4 md:p-10">
 
-    <div class="fixed top-4 right-4 z-50">
+    <div class="fixed top-4 right-4 z-50 flex gap-2">
+        <button id="theme-toggle" type="button" onclick="toggleTheme()" aria-label="切换为深色模式"
+            class="utility-toggle glass-card flex items-center gap-1.5 px-4 py-2 text-sm font-semibold cursor-pointer">
+            <svg id="theme-moon" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 0 1 11.2 3 9 9 0 1 0 21 12.8Z"/></svg>
+            <svg id="theme-sun" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+            <span id="theme-toggle-text">深色</span>
+        </button>
         <button id="lang-toggle" onclick="toggleLang()" aria-label="切换语言 / Switch language"
-            class="glass-card flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-gray-700 cursor-pointer">
+            class="utility-toggle glass-card flex items-center gap-1.5 px-4 py-2 text-sm font-semibold cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
             <span id="lang-toggle-text">EN</span>
         </button>
@@ -40,8 +84,8 @@
 
     <div class="max-w-7xl mx-auto">	
         <header class="mb-8 text-center mt-12">
-            <h1 class="text-4xl font-semibold text-gray-900 mb-2" data-i18n="title">Apple 设备数据库</h1>
-            <p class="text-gray-500" data-i18n="subtitle">GeekBench 分数与系统生命周期全览 by 梨</p>
+            <h1 class="text-4xl font-semibold text-heading mb-2" data-i18n="title">Apple 设备数据库</h1>
+            <p class="text-muted" data-i18n="subtitle">GeekBench 分数与系统生命周期全览 by 梨</p>
         </header>
 
         <!-- 操作栏 -->
@@ -52,9 +96,10 @@
                 <button onclick="filterData('iPad')" class="btn btn-inactive" data-filter="iPad">iPad</button>
                 <button onclick="filterData('iPod')" class="btn btn-inactive" data-filter="iPod">iPod</button>
             </div>
-            <div class="flex flex-wrap gap-2">
-                <button onclick="sortData('single')" class="btn btn-inactive bg-gray-100 text-sm" data-i18n="sortSingle">按单核排序 ↓</button>
-                <button onclick="sortData('multi')" class="btn btn-inactive bg-gray-100 text-sm" data-i18n="sortMulti">按多核排序 ↓</button>
+            <div class="flex flex-wrap gap-2" id="sort-group" role="group" aria-label="排序方式">
+                <button onclick="sortData('release')" class="btn btn-active text-sm" data-sort="release" aria-pressed="true">按发布时间排序 ↑</button>
+                <button onclick="sortData('single')" class="btn btn-inactive text-sm" data-sort="single" aria-pressed="false">按单核排序</button>
+                <button onclick="sortData('multi')" class="btn btn-inactive text-sm" data-sort="multi" aria-pressed="false">按多核排序</button>
             </div>
         </div>
 
@@ -62,19 +107,19 @@
         <div class="glass-card overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
-                    <thead class="bg-gray-50 border-b border-gray-200">
+                    <thead >
                         <tr>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap" data-i18n="th_lineup">产品线</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap" data-i18n="th_model">设备型号</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap text-center" data-i18n="th_status">状态</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap" data-i18n="th_release">发布时间</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600 whitespace-nowrap text-center" data-i18n="th_os">系统版本</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600" data-i18n="th_cpu">CPU</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600" data-i18n="th_single">单核</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-600" data-i18n="th_multi">多核</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-muted whitespace-nowrap" data-i18n="th_lineup">产品线</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-muted whitespace-nowrap" data-i18n="th_model">设备型号</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-muted whitespace-nowrap text-center" data-i18n="th_status">状态</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-muted whitespace-nowrap" data-i18n="th_release">发布时间</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-muted whitespace-nowrap text-center" data-i18n="th_os">系统版本</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-muted" data-i18n="th_cpu">CPU</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-muted" data-i18n="th_single">单核</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-muted" data-i18n="th_multi">多核</th>
                         </tr>
                     </thead>
-                    <tbody id="table-body" class="divide-y divide-gray-100 text-sm">
+                    <tbody id="table-body" class="text-sm">
                         <!-- 数据渲染 -->
                     </tbody>
                 </table>
@@ -86,14 +131,30 @@
         let rawData = [];
         let displayData = [];
         let activeFilter = 'all';
+        // 延续原始数据从早到晚的默认顺序；跑分首次点击默认从高到低。
+        let activeSort = 'release';
+        let sortDirection = 'asc';
+        const SORT_CONFIG = {
+            release: { key: '发布年月', label: 'sortRelease', direction: 'asc', column: 'th_release' },
+            single: { key: '单核跑分', label: 'sortSingle', direction: 'desc', column: 'th_single' },
+            multi: { key: '多核跑分', label: 'sortMulti', direction: 'desc', column: 'th_multi' }
+        };
 
         const STRINGS = {
             zh: {
                 title: 'Apple 设备数据库',
                 subtitle: 'GeekBench 分数与系统生命周期全览 by 梨',
                 all: '全部',
-                sortSingle: '按单核排序 ↓',
-                sortMulti: '按多核排序 ↓',
+                sortRelease: '按发布时间排序',
+                sortSingle: '按单核排序',
+                sortMulti: '按多核排序',
+                sortGroup: '排序方式',
+                ascending: '升序',
+                descending: '降序',
+                themeLight: '浅色',
+                themeDark: '深色',
+                switchLight: '切换为浅色模式',
+                switchDark: '切换为深色模式',
                 th_lineup: '产品线',
                 th_model: '设备型号',
                 th_status: '状态',
@@ -110,8 +171,16 @@
                 title: 'Apple Device Database',
                 subtitle: 'GeekBench Scores & OS Lifecycle Overview by lingyicute',
                 all: 'All',
-                sortSingle: 'Sort by Single-Core ↓',
-                sortMulti: 'Sort by Multi-Core ↓',
+                sortRelease: 'Sort by Release Date',
+                sortSingle: 'Sort by Single-Core',
+                sortMulti: 'Sort by Multi-Core',
+                sortGroup: 'Sort order',
+                ascending: 'Ascending',
+                descending: 'Descending',
+                themeLight: 'Light',
+                themeDark: 'Dark',
+                switchLight: 'Switch to light mode',
+                switchDark: 'Switch to dark mode',
                 th_lineup: 'Lineup',
                 th_model: 'Model',
                 th_status: 'Status',
@@ -127,11 +196,11 @@
         };
 
         // 默认中文；记住用户上次选择
-        let currentLang = localStorage.getItem('lang') || 'zh';
+        let currentLang = readPreference('lang') === 'en' ? 'en' : 'zh';
 
         function setLang(lang) {
             currentLang = lang;
-            localStorage.setItem('lang', lang);
+            savePreference('lang', lang);
             document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
             document.title = STRINGS[lang].title;
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -139,8 +208,33 @@
                 if (STRINGS[lang][key] !== undefined) el.textContent = STRINGS[lang][key];
             });
             document.getElementById('lang-toggle-text').textContent = lang === 'zh' ? 'EN' : '中文';
+            updateThemeButton();
+            updateButtonStyles();
             renderTable(displayData);
         }
+
+        function updateThemeButton() {
+            const dark = document.documentElement.dataset.theme === 'dark';
+            const t = STRINGS[currentLang];
+            const button = document.getElementById('theme-toggle');
+            document.getElementById('theme-toggle-text').textContent = dark ? t.themeLight : t.themeDark;
+            button.setAttribute('aria-label', dark ? t.switchLight : t.switchDark);
+            button.title = dark ? t.switchLight : t.switchDark;
+        }
+
+        function toggleTheme() {
+            preferredTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.dataset.theme = preferredTheme;
+            savePreference('theme', preferredTheme);
+            updateThemeButton();
+        }
+
+        systemTheme.addEventListener('change', event => {
+            if (!preferredTheme) {
+                document.documentElement.dataset.theme = event.matches ? 'dark' : 'light';
+                updateThemeButton();
+            }
+        });
 
         function toggleLang() {
             setLang(currentLang === 'zh' ? 'en' : 'zh');
@@ -149,6 +243,7 @@
         async function loadData() {
             try {
                 const response = await fetch('data.blob');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const csvText = await response.text();
 
                 Papa.parse(csvText, {
@@ -156,8 +251,7 @@
                     skipEmptyLines: true,
                     complete: function(results) {
                         rawData = results.data;
-                        displayData = [...rawData];
-                        setLang(currentLang);
+                        applyFilterAndSort();
                     }
                 });
             } catch (error) {
@@ -174,11 +268,11 @@
             const t = STRINGS[currentLang];
 
             if (diffYears >= 7) {
-                return { text: t.status_discontinued, class: 'bg-red-100 text-red-600 border border-red-200' };
+                return { text: t.status_discontinued, class: 'status-discontinued' };
             } else if (diffYears >= 5) {
-                return { text: t.status_vintage, class: 'bg-yellow-100 text-yellow-600 border border-yellow-200' };
+                return { text: t.status_vintage, class: 'status-vintage' };
             } else {
-                return { text: t.status_active, class: 'bg-green-100 text-green-600 border border-green-200' };
+                return { text: t.status_active, class: 'status-active' };
             }
         }
 
@@ -189,22 +283,22 @@
             data.forEach(item => {
                 const status = getStatus(item["发布年月"]);
                 const row = document.createElement('tr');
-                row.className = "hover:bg-blue-50/50 transition-colors";
+                row.className = "transition-colors";
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-gray-500">${item["产品线"]}</td>
-                    <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">${item["设备型号"]}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-muted">${item["产品线"]}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-bold text-heading">${item["设备型号"]}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-center">
                         <span class="status-badge ${status.class}">${status.text}</span>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-gray-500">${item["发布年月"]}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-muted">${item["发布年月"]}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-center font-medium">
-                        <span class="text-gray-400">iOS</span> ${item["首发系统"]}
-                        <span class="mx-1 text-gray-300">→</span>
-                        <span class="text-blue-600">${item["最高系统"]}</span>
+                        <span class="text-faint">iOS</span> ${item["首发系统"]}
+                        <span class="mx-1 text-faint">→</span>
+                        <span class="text-primary">${item["最高系统"]}</span>
                     </td>
-                    <td class="px-6 py-4 text-gray-600">${item["CPU 型号"]}</td>
-                    <td class="px-6 py-4 font-mono font-bold text-blue-600">${item["单核跑分"]}</td>
-                    <td class="px-6 py-4 font-mono font-bold text-indigo-600">${item["多核跑分"]}</td>
+                    <td class="px-6 py-4 text-muted">${item["CPU 型号"]}</td>
+                    <td class="px-6 py-4 font-mono font-bold text-primary">${item["单核跑分"]}</td>
+                    <td class="px-6 py-4 font-mono font-bold text-secondary">${item["多核跑分"]}</td>
                 `;
                 tbody.appendChild(row);
             });
@@ -212,25 +306,73 @@
 
         function filterData(type) {
             activeFilter = type;
-            updateButtonStyles(type);
-            displayData = (type === 'all') ? [...rawData] : rawData.filter(item => item["产品线"].toLowerCase().includes(type.toLowerCase()));
-            renderTable(displayData);
+            // 切换类别后保留排序状态，并对新筛选结果应用同一排序。
+            applyFilterAndSort();
         }
 
         function sortData(mode) {
-            const key = mode === 'single' ? "单核跑分" : "多核跑分";
-            displayData.sort((a, b) => (parseInt(b[key]) || 0) - (parseInt(a[key]) || 0));
+            if (!SORT_CONFIG[mode]) return;
+            sortDirection = activeSort === mode
+                ? (sortDirection === 'asc' ? 'desc' : 'asc')
+                : SORT_CONFIG[mode].direction;
+            activeSort = mode;
+            applyFilterAndSort();
+        }
+
+        function getSortValue(item, mode) {
+            const value = String(item[SORT_CONFIG[mode].key] ?? '').trim();
+            if (!value) return null;
+            if (mode === 'release') {
+                // 不能按小数解析：2020.10（十月）应晚于 2020.9（九月）。
+                const match = value.match(/^(\d{4})\.(\d{1,2})$/);
+                if (!match || +match[2] < 1 || +match[2] > 12) return null;
+                return +match[1] * 12 + +match[2] - 1;
+            }
+            const number = Number(value.replace(/,/g, ''));
+            return Number.isFinite(number) ? number : null;
+        }
+
+        function applyFilterAndSort() {
+            displayData = rawData.filter(item => activeFilter === 'all' ||
+                item['产品线'].toLowerCase().includes(activeFilter.toLowerCase()));
+            displayData.sort((a, b) => {
+                const left = getSortValue(a, activeSort);
+                const right = getSortValue(b, activeSort);
+                // 缺失数据在两个方向下都放到末尾；相同值保持原始顺序。
+                if (left === null) return right === null ? 0 : 1;
+                if (right === null) return -1;
+                return (left - right) * (sortDirection === 'asc' ? 1 : -1);
+            });
+            updateButtonStyles();
             renderTable(displayData);
         }
 
-        function updateButtonStyles(activeType) {
-            const buttons = document.querySelectorAll('#filter-group .btn');
-            buttons.forEach(btn => {
-                const isMatch = btn.getAttribute('data-filter') === activeType;
-                btn.className = isMatch ? 'btn btn-active' : 'btn btn-inactive';
+        function updateButtonStyles() {
+            document.querySelectorAll('#filter-group .btn').forEach(btn => {
+                const selected = btn.dataset.filter === activeFilter;
+                btn.classList.toggle('btn-active', selected);
+                btn.classList.toggle('btn-inactive', !selected);
+                btn.setAttribute('aria-pressed', String(selected));
+            });
+            const t = STRINGS[currentLang];
+            document.getElementById('sort-group').setAttribute('aria-label', t.sortGroup);
+            document.querySelectorAll('#sort-group .btn').forEach(btn => {
+                const selected = btn.dataset.sort === activeSort;
+                const label = t[SORT_CONFIG[btn.dataset.sort].label];
+                btn.classList.toggle('btn-active', selected);
+                btn.classList.toggle('btn-inactive', !selected);
+                btn.setAttribute('aria-pressed', String(selected));
+                btn.textContent = label + (selected ? (sortDirection === 'asc' ? ' ↑' : ' ↓') : '');
+                btn.setAttribute('aria-label', label + (selected ? ` · ${sortDirection === 'asc' ? t.ascending : t.descending}` : ''));
+            });
+            Object.entries(SORT_CONFIG).forEach(([mode, config]) => {
+                const header = document.querySelector(`[data-i18n="${config.column}"]`);
+                if (mode === activeSort) header.setAttribute('aria-sort', sortDirection === 'asc' ? 'ascending' : 'descending');
+                else header.removeAttribute('aria-sort');
             });
         }
 
+        setLang(currentLang);
         loadData();
     </script>
 </body>
