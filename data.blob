@@ -28,11 +28,13 @@ iPhone,iPhone 6s / 6s Plus,2015.9,9,15,Apple A9,606,879,GB6
 iPad,"iPad Pro 12.9"" (gen 1)",2015.11,9,16,Apple A9X,749,1248,GB6
 iPhone,iPhone SE (gen 1),2016.3,9,15,Apple A9,618,937,GB6
 iPad,"iPad Pro 9.7""",2016.3,9,16,Apple A9X,739,1099,GB6
-iPhone,iPhone 7 / 7 Plus,2016.9,10,15,Apple A10 Fusion,785,969,GB6
+iPhone,iPhone 7,2016.9,10,15,Apple A10 Fusion,785,969,GB6
+iPhone,iPhone 7 Plus,2016.9,10,15,Apple A10 Fusion,814,1156,GB6
 iPad,iPad (gen 5),2017.3,10,16,Apple A9,632,975,GB6
 iPad,"iPad Pro 10.5""",2017.6,10,17,Apple A10X Fusion,941,2211,GB6
 iPad,"iPad Pro 12.9"" (gen 2)",2017.6,10,17,Apple A10X Fusion,931,2260,GB6
-iPhone,iPhone 8 / 8 Plus,2017.9,11,16,Apple A11 Bionic,1037,1718,GB6
+iPhone,iPhone 8,2017.9,11,16,Apple A11 Bionic,1037,1720,GB6
+iPhone,iPhone 8 Plus,2017.9,11,16,Apple A11 Bionic,1058,2263,GB6
 iPhone,iPhone X,2017.11,11,16,Apple A11 Bionic,1052,2057,GB6
 iPad,iPad (gen 6),2018.3,11,17,Apple A10 Fusion,829,1133,GB6
 iPhone,iPhone XS / XS Max,2018.9,12,18,Apple A12 Bionic,1286,2656,GB6
